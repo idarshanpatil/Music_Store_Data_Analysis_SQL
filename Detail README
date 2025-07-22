@@ -1,0 +1,150 @@
+# 🎵 Music Store Data Analysis (SQL Project)
+
+This project focuses on analyzing a fictional digital music store's database using **SQL**. It includes a wide range of queries that provide valuable business insights, categorized by difficulty level: Easy, Moderate, and Advanced. The project is based on the **Chinook Database**, a popular sample database representing a digital media store.
+
+---
+
+## 📁 Project Files
+
+- `Music_Store_data_analysis.sql` — SQL script containing all queries for data analysis.
+- `Music Store Analysis-Questions.pdf` — PDF outlining the question sets grouped by difficulty.
+
+---
+
+## 🎯 Objective
+
+To help a music store understand its sales performance, customer behavior, and market segments by using SQL to answer business-critical questions, such as:
+
+- Who are the top customers and best-performing artists?
+- Which cities and countries generate the most revenue?
+- What genres and tracks are most popular?
+- How can we segment customers based on spending behavior?
+
+---
+
+## 🧠 Key SQL Concepts Used
+
+- **Joins**: Inner joins to link related tables.
+- **Grouping and Aggregation**: `GROUP BY`, `SUM()`, `COUNT()`, `AVG()` for summarizing data.
+- **Filtering and Sorting**: Using `WHERE`, `ORDER BY`, and `LIMIT`.
+- **Subqueries**: To filter results based on computed metrics.
+- **CTEs (Common Table Expressions)**: For modular query writing and advanced analysis.
+- **Window Functions**: Such as `ROW_NUMBER()` for ranking.
+
+---
+
+## 🔍 Questions & Explanations
+
+### ✅ Question Set 1 – Easy
+
+1. **Who is the senior-most employee?**  
+   Sorts employees by their `LEVELS` field and returns the top-ranking one.
+
+2. **Which countries have the most invoices?**  
+   Groups invoices by `billing_country` and counts them to see which countries are most active.
+
+3. **Top 3 invoice totals**  
+   Orders the `invoice.total` column in descending order and returns the highest 3 values.
+
+4. **Which city brings in the most money?**  
+   Sums total invoice amounts per `billing_city` and identifies the city with the highest total.
+
+5. **Who is the best customer?**  
+   Aggregates total spending per customer and returns the highest spender.
+
+---
+
+### ⚙️ Question Set 2 – Moderate
+
+1. **Rock Music Listeners**  
+   Identifies customers who purchased tracks in the "Rock" genre and displays their contact info.
+
+2. **Top 10 Rock Bands**  
+   Groups tracks by artist and genre to find the artists who contributed the most to the Rock genre.
+
+3. **Tracks longer than average**  
+   Computes average track length, then filters and sorts tracks longer than the average duration.
+
+---
+
+### 🧠 Question Set 3 – Advanced
+
+1. **Customer spending on best-selling artist**  
+   First finds the artist with the highest total sales, then calculates how much each customer spent on that artist.
+
+2. **Most popular genre by country**  
+   Counts the number of purchases per genre in each country, then selects the genre(s) with the highest counts per country.
+
+3. **Top-spending customer by country**  
+   Uses a window function (`ROW_NUMBER()`) to rank customers by spending per country, and filters to only the top-ranked ones.
+
+---
+
+## 🛠 Tools Used
+
+- **SQL**: PostgreSQL / MySQL syntax used for querying.
+- **SQL IDEs**: pgAdmin, DBeaver, SQL Workbench.
+- **Chinook Database**: Open-source sample database used for realistic scenarios.
+- **YouTube Tutorial**: Project inspired by [Rishabh Mishra's Channel](https://www.youtube.com/@RishabhMishraOfficial).
+
+---
+
+## 📊 Sample SQL Snippets
+
+### Top-Spending Customer:
+```sql
+SELECT customer.customer_id, first_name, last_name, SUM(total) AS total_spending
+FROM customer
+JOIN invoice ON customer.customer_id = invoice.customer_id
+GROUP BY customer.customer_id, first_name, last_name
+ORDER BY total_spending DESC
+LIMIT 1;
+```
+
+### Best-Selling City:
+```sql
+SELECT billing_city, SUM(total) AS invoice_total
+FROM invoice
+GROUP BY billing_city
+ORDER BY invoice_total DESC
+LIMIT 1;
+```
+
+### Rock Music Listeners:
+```sql
+SELECT DISTINCT c.email, c.first_name, c.last_name
+FROM customer c
+JOIN invoice i ON c.customer_id = i.customer_id
+JOIN invoice_line il ON i.invoice_id = il.invoice_id
+JOIN track t ON il.track_id = t.track_id
+JOIN genre g ON t.genre_id = g.genre_id
+WHERE g.name = 'Rock'
+ORDER BY c.email;
+```
+
+---
+
+## 📌 How to Use
+
+1. Clone or download this repository.
+2. Import the Chinook database into your local SQL environment.
+3. Open `Music_Store_data_analysis.sql` in your SQL client.
+4. Run and study each query to understand how it works.
+5. Modify or extend queries for deeper analysis.
+
+---
+
+## 🙌 Acknowledgments
+
+- Chinook Database Contributors
+- [Rishabh Mishra](https://www.youtube.com/@RishabhMishraOfficial) for the tutorial series
+- Open-source SQL tools and communities
+
+---
+
+## 📬 Contact
+
+Made with ❤️ by **Darshan P
+atil**  
+🔗 LinkedIn:  
+📫 Email: patildarshan2702@gmail.com
